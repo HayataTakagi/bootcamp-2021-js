@@ -19,6 +19,7 @@ class TodoList {
         this.dom.innerHTML = "";
         for (const listItem of this.todoList) {
             this.dom.appendChild(listItem.renderer());
+            listItem.mount();
         }
     }
 

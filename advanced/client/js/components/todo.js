@@ -3,12 +3,17 @@ class Todo {
         this.id = id;
         this.name = name;
         this.done = done;
+        this.dom = null;
     }
     mount() {
-
+        this.dom.addEventListener('click', async (event) => {
+            event.preventDefault();
+            console.log(this.id);
+        });
     }
     renderer() {
-        return getTodoItemDom(this);
+        this.dom = getTodoItemDom(this);
+        return this.dom;
     }
 }
 
