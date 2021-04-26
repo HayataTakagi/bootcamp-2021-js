@@ -1,3 +1,5 @@
+import TodoList from "./components/todo-list.js";
+
 const main = () => {
     const todoListDom = document.getElementById("todoUl");
     const submitButton = document.getElementById("submitButton");
@@ -5,13 +7,10 @@ const main = () => {
 
     let todoListData = [];
 
-    fetch("http://localhost:3000/todo")
-        .then(response => response.json())
-        .then(data => {
-            for (const todoItemData of data.todoList) {
-                todoListDom.appendChild(getTodoItemDom(todoItemData));
-            }
-        });
+    const todolist = new TodoList();
+    todolist.mount();
+    todolist.renderer();
+
 
     submitButton.addEventListener('click', event => {
         fetch("http://localhost:3000/todo", {
