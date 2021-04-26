@@ -14,15 +14,21 @@ class TodoList {
             .then(response => response.json())
             .then(data => {
                 for (const item of data.todoList) {
-                    this.todoList.append(new Todo(item.id, item.name, item.done));
+                    this.todoList.push(new Todo(item.id, item.name, item.done));
                 }
-            });
+            }).then(() => this.renderer());
     }
 
     renderer() {
+        todoListDom.innerHTML = "";
         for (const listItem of this.todoList) {
             todoListDom.appendChild(listItem.renderer());
         }
+    }
+
+    appendTodo(id, name, done) {
+        const newTodo = new Todo(id, name, done);
+        this.todoList.push(newTodo);
     }
 }
 
