@@ -9,6 +9,7 @@ class TodoForm {
     }
     async mount() {
         this.button.addEventListener('click', async (event) => {
+            event.preventDefault();
             this.todoName = this.input.value;
             const res = await Api.postTodoItem(this.todoName);
             this.todoList.appendTodo(res.id, res.name, res.done);

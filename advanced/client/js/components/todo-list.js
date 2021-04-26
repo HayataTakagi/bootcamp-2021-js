@@ -1,11 +1,10 @@
 import Todo from "./todo.js";
 import Api from "../api.js"
 
-const todoListDom = document.getElementById("todoUl");
-
 class TodoList {
     constructor() {
         this.todoList = [];
+        this.dom = document.getElementById("todoUl");
     }
 
     async mount() {
@@ -17,9 +16,9 @@ class TodoList {
     }
 
     renderer() {
-        todoListDom.innerHTML = "";
+        this.dom.innerHTML = "";
         for (const listItem of this.todoList) {
-            todoListDom.appendChild(listItem.renderer());
+            this.dom.appendChild(listItem.renderer());
         }
     }
 
