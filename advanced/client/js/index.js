@@ -1,7 +1,9 @@
-
 const main = () => {
-  const todoListDom = document.getElementById("todoUl");
-  let todoListData = [];
+    const todoListDom = document.getElementById("todoUl");
+    const submitButton = document.getElementById("submitButton");
+    const todoInput = document.getElementById("todoNameInput");
+
+    let todoListData = [];
 
     fetch("http://localhost:3000/todo")
         .then(response => response.json())
@@ -10,6 +12,22 @@ const main = () => {
                 todoListDom.appendChild(getTodoItemDom(todoItemData));
             }
         });
+
+    submitButton.addEventListener('click', event => {
+        fetch("http://localhost:3000/todo", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({name: todoInput.value})
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                todoListDom.appendChild(getTodoItemDom(data));
+                todoInput.value = "";
+            });
+    });
 };
 
 const getTodoItemDom = (todoData) => {

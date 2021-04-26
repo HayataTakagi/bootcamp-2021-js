@@ -1,16 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const todoList = [
-    {  // とりあえずダミー
-        id: 1,
-        name: "TODO Sample 01",
-        done: false,
-    },
-    {  // とりあえずダミー
-        id: 2,
-        name: "TODO Sample 02",
-        done: false,
-    }];
+const todoList = [];
 
 class Todo {
   constructor(id, name, done) {
