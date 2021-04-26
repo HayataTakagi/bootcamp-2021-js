@@ -1,3 +1,5 @@
+import Api from "../api.js";
+
 class TodoForm {
     constructor(todoList) {
         this.todoName = "";
@@ -6,22 +8,13 @@ class TodoForm {
         this.todoList = todoList;
     }
     async mount() {
-        this.button.addEventListener('click', event => {
+        this.button.addEventListener('click', async (event) => {
             this.todoName = this.input.value;
-            fetch("http://localhost:3000/todo", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({name: this.todoName})
-            })
-                .then(response => response.json())
-                .then(data => {
-                    this.todoList.appendTodo(data.id, data.name, data.done);
-                    this.todoName = "";
-                    this.todoList.renderer();
-                    this.renderer();
-                });
+            const res = await Api.postTodoItem(this.todoName);
+            this.todoList.appendTodo(res.id, res.name, res.done);
+            this.todoName = "";
+            this.todoList.renderer();
+            this.renderer();
         });
     }
     renderer() {

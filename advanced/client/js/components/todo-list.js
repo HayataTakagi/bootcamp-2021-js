@@ -1,22 +1,19 @@
 import Todo from "./todo.js";
+import Api from "../api.js"
 
 const todoListDom = document.getElementById("todoUl");
 
 class TodoList {
     constructor() {
-        this.todoList = [
-            new Todo(1, "hogehoge", false)
-        ];
+        this.todoList = [];
     }
 
-    mount() {
-        fetch("http://localhost:3000/todo")
-            .then(response => response.json())
-            .then(data => {
-                for (const item of data.todoList) {
-                    this.todoList.push(new Todo(item.id, item.name, item.done));
-                }
-            }).then(() => this.renderer());
+    async mount() {
+        const res = await Api.getTodoList();
+        for (const item of res.todoList) {
+            this.todoList.push(new Todo(item.id, item.name, item.done));
+        }
+        this.renderer();
     }
 
     renderer() {
