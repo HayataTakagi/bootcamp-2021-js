@@ -45,6 +45,6 @@ const getTodoItemDom = (todoData) => {
             <div class="todo-name">${todoData.name}</div>
             <div data-todo-id="${todoData.id}" class="todo-remove-button">x</div>`;
     return newLm;
-}
+};
 
 main();

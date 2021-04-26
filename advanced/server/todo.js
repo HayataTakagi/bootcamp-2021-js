@@ -1,32 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const todoList = [];
+const TodoList = require("./model");
 
-class Todo {
-    constructor(id, name, done) {
-        this.id = id;
-        this.name = name;
-        this.done = done;
-    }
-
-    toJSON() {
-        return {
-            id: this.id,
-            name: this.name,
-            done: this.done
-        };
-    }
-}
+const todoList = new TodoList();
 
 router.post("/", (req, res, next) => {
-    const id = todoList.length ? todoList[todoList.length - 1].id + 1 : 0;
-    const item = new Todo(id, escapeHTML(req.body.name), false);
-    todoList.push(item);
-    return res.status(201).send(item);
+    const addedItem = todoList.addItem(escapeHTML(req.body.name));
+    return res.status(201).send(addedItem);
 });
 
 router.get("/", (req, res, next) => {
-    return res.send({todoList: todoList});
+    return res.send({todoList: todoList.getList()});
 });
 
 router.patch("/:id", (req, res, next) => {
